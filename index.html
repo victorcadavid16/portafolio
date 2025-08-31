@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PORTAFOLIO PERSONAL </title>
+</head>
+<body>
+<header>
+  <h1>MI PRIMER PORTAFOLIO</h1>
+  <nav>
+    <ul>
+      <li><a href="https://github.com/dashboard">Inicio</a></li>
+      <li><a href="https://github.com/victorcadavid16/html">Contnido</a></li>
+      <li><a href="https://github.com/victorcadavid16/html/settings">Final</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <article>
+    <h2>Portafolio del sena</h2>
+    <p>Es una pltaforma donde puedo subir todas actividades </p>
+  </article>
+
+  <section id="inicio"> 
+    <h2>Actividades</h2>
+    <p>Para cada actividad existe un tiempo limite para presentarla</p>
+  </section>
+
+</main>
+
+<aside>
+  <h3>Mi programa de formacion </h3>
+  <p>Analisis y desarrollo de sofware</p>
+  <p>ficha 3234206</p>
+</aside>
+<br>
+<br>
+<table border="1"cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>ficha</th>
+      <th>programa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>victor cadavid</td>
+      <td>3234206</td>
+      <td>Adso</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3">Total de registros: 1</td>
+    </tr>
+  </tfoot>
+</table>
+<br>
+<section id="registro">
+  <h2>Formulario de registro</h2>
+  <form action="procesar_registro.php" method="post">
+
+    <fieldset>
+
+      <legend>Datos Personales</legend>
+    <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" name="nombre">
+
+  <label for="apellidos">apellidos:</label>
+  <input type="text" id="apellidos" name="apellidos">
+
+  <label for="telefono">Teléfono:</label> 
+  <input type="tel" id="telefono" name="telefono">
+</fieldset>
+<fieldset>
+  <legend>Ubicacion</legend>
+  <label for="direccion">direccion:</label>
+  <input type="text" id="direccion" name="direccion">
+</fieldset>
+  <fieldset>
+    <legend>Intereses y genero</legend>
+  <label for="gustos">gustos:</label>
+  <input type="text" id="gustos" name="gustos">
+
+  <label for="genero">genero</label>
+  <input type="radio" id="genero-m" nombre="genero" value="masculino">
+  <label for="genero-m">masculino</label>
+
+  <input type="radio" id="genero-f" nombre="genero" value="femenino">
+  <label for="genero-f">femenino</label>
+
+  <input type="radio" id="genero-o" nombre="genero" value="otro">
+  <label for="genero-o">otro</label>
+</fieldset>
+  <button>enviar</button>
+  </form>
+</section>
+<br>
+<section id="blog">
+    <h2>Mi Blog</h2>
+    <article>
+      <h3>sena cimi giron</h3>
+      <img src="images.jpg" alt="Imagen sobre adso giron">
+      <p>
+        El SENA en Girón se llama el Centro Industrial de Mantenimiento Integral (CIMI) y se enfoca en formación técnica y tecnológica en áreas como soldadura, mantenimiento eléctrico y electrónico, telecomunicaciones e informática, atendiendo las necesidades de la región metropolitana de Bucaramanga. 
+      </p>
+<br>
+  <h2>Lista de Videos y Audios</h2>
+ <ul>
+    <!-- Video 1 -->
+    <li>
+      <h3>Video institucional sena </h3>
+      <video controls width="320">
+        <source src="SENA es Colombia.mp4" type="video/mp4">
+        un video para tomar sentido de pertenecia.
+      </video>
+      <br>
+      <audio controls>
+  <source src="#SuperTalentosSENA Rumbo a Kazán WorldSkills 2019.mp3" type="audio/mpeg">
+  
+  Tu navegador no soporta la etiqueta de audio.
+</audio>
+    </li>
+
+</section>
+
+<nav>
+  <ul>
+    <li><a href="https://www.w3schools.com/html/">curso de html</a></li>
+    <a href="#inicio">Inicio</a>
+  </ul>
+</nav>
+
+<footer>
+  <p>&copy;  Mi Sitio Web. Tiene todos los derechos reservados.</p>
+</footer>
+
+
+</body>
+</html>
