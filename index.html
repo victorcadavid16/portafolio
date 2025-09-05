@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<br>
+<title>Sena</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PORTAFOLIO PERSONAL </title>
 </head>
 <body>
 <header>
-  <h1>MI PRIMER PORTAFOLIO</h1>
+  <h1 id="inicio">MI PRIMER PORTAFOLIO</h1>
   <nav>
     <ul>
       <li><a href="https://github.com/dashboard">Inicio</a></li>
@@ -23,7 +25,7 @@
     <p>Es una pltaforma donde puedo subir todas actividades </p>
   </article>
 
-  <section id="inicio"> 
+  <section> 
     <h2>Actividades</h2>
     <p>Para cada actividad existe un tiempo limite para presentarla</p>
   </section>
@@ -127,12 +129,203 @@
 
 </section>
 
+<h1>Productos Sena</h1>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Productos — Carro sencillo</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;max-width:900px;margin:24px auto;padding:0 12px;color:#111}
+    h1{font-size:1.2rem}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{padding:8px;border:1px solid #ddd;text-align:left}
+    th{background:#f5f5f5}
+    button{padding:6px 10px;border:none;background:#0077cc;color:#fff;border-radius:4px;cursor:pointer}
+    .cart{margin-top:18px;padding:10px;border:1px solid #ddd;border-radius:6px}
+    .cart ul{list-style:none;padding:0;margin:0}
+    .cart li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eee}
+    .muted{color:#666;font-size:0.9rem}
+    input.qty{width:48px;padding:4px}
+    .actions{display:flex;gap:8px}
+  </style>
+</head>
+<body>
+  <h1>Catálogo de productos</h1>
+  <p class="muted">Ejemplo sencillo con &lt;table&gt; y carro de compras (sin persistencia).</p>
+
+  <!-- Tabla de productos -->
+  <table aria-label="Productos disponibles">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody id="products-body">
+      <!-- filas generadas por JS -->
+    </tbody>
+  </table>
+
+  <!-- Carro de compras -->
+  <section class="cart" aria-labelledby="cart-title">
+    <h2 id="cart-title">Carro de compras</h2>
+    <div id="cart-empty" class="muted">El carro está vacío.</div>
+    <ul id="cart-list" aria-live="polite"></ul>
+    <div id="cart-total" style="margin-top:8px;font-weight:600"></div>
+    <div class="actions" style="margin-top:10px">
+      <button id="clear">Vaciar carro</button>
+      <button id="checkout">Pagar</button>
+    </div>
+  </section>
+
+  <script>
+    // Productos de ejemplo (cambia/añade según necesites)
+    const PRODUCTS = [
+      { id: 'p1', name: 'Zapatos industriales', desc: 'Seguridad y durabilidad', price: 85000 },
+      { id: 'p2', name: 'Pantalon industrial', desc: 'Proteccion ', price: 120000 },
+      { id: 'p3', name: 'Camisa manga larga', desc: 'Presentacion ', price: 45000 }
+    ];
+
+    // Carro: { productId: quantity }
+    const cart = {};
+
+    // Util: formatea moneda (COP)
+    const fmt = n => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
+
+    // Render tabla de productos
+    function renderProducts(){
+      const tbody = document.getElementById('products-body');
+      tbody.innerHTML = '';
+      for(const p of PRODUCTS){
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${p.name}</td>
+          <td>${p.desc}</td>
+          <td>${fmt(p.price)}</td>
+          <td><input class="qty" type="number" min="1" value="1" aria-label="Cantidad para ${p.name}"></td>
+          <td><button data-id="${p.id}">Agregar</button></td>
+        `;
+        tbody.appendChild(tr);
+      }
+
+      // eventos para botones Agregar
+      tbody.querySelectorAll('button[data-id]').forEach(btn=>{
+        btn.addEventListener('click', e=>{
+          const id = e.currentTarget.dataset.id;
+          const row = e.currentTarget.closest('tr');
+          const qty = Math.max(1, parseInt(row.querySelector('input').value) || 1);
+          addToCart(id, qty);
+        });
+      });
+    }
+
+    // Añadir al carro
+    function addToCart(id, qty=1){
+      cart[id] = (cart[id] || 0) + qty;
+      renderCart();
+    }
+
+    // Eliminar del carro
+    function removeFromCart(id){
+      delete cart[id];
+      renderCart();
+    }
+
+    // Actualizar cantidad
+    function updateQty(id, qty){
+      if(qty <= 0) removeFromCart(id);
+      else cart[id] = qty;
+      renderCart();
+    }
+
+    // Render carro
+    function renderCart(){
+      const list = document.getElementById('cart-list');
+      const empty = document.getElementById('cart-empty');
+      const totalDiv = document.getElementById('cart-total');
+      list.innerHTML = '';
+      const ids = Object.keys(cart);
+      if(ids.length === 0){
+        empty.style.display = 'block';
+        totalDiv.textContent = '';
+        return;
+      }
+      empty.style.display = 'none';
+
+      let total = 0;
+      for(const id of ids){
+        const prod = PRODUCTS.find(p => p.id === id);
+        if(!prod) continue;
+        const qty = cart[id];
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>${prod.name} — ${fmt(prod.price)} x <input class="qty" type="number" min="1" value="${qty}" data-id="${id}" aria-label="Cantidad ${prod.name}"></span>
+          <span>
+            <button data-remove="${id}">Eliminar</button>
+          </span>
+        `;
+        list.appendChild(li);
+        total += prod.price * qty;
+      }
+
+      // Eventos: inputs de cantidad
+      list.querySelectorAll('input.qty').forEach(inp=>{
+        inp.addEventListener('change', e=>{
+          const id = e.target.dataset.id;
+          const val = Math.max(0, parseInt(e.target.value) || 0);
+          updateQty(id, val);
+        });
+      });
+
+      // Eventos: botones eliminar
+      list.querySelectorAll('button[data-remove]').forEach(b=>{
+        b.addEventListener('click', e=>{
+          removeFromCart(e.currentTarget.dataset.remove);
+        });
+      });
+
+      totalDiv.textContent = 'Total: ' + fmt(total);
+    }
+
+    // Botones Clear y Checkout
+    document.getElementById('clear').addEventListener('click', ()=>{
+      for(const k of Object.keys(cart)) delete cart[k];
+      renderCart();
+    });
+
+    document.getElementById('checkout').addEventListener('click', ()=>{
+      const ids = Object.keys(cart);
+      if(ids.length === 0){ alert('El carro está vacío'); return; }
+      let resumen = 'Resumen de pedido:\\n';
+      let total = 0;
+      for(const id of ids){
+        const p = PRODUCTS.find(x => x.id === id);
+        resumen += `${p.name} x ${cart[id]} = ${fmt(p.price * cart[id])}\\n`;
+        total += p.price * cart[id];
+      }
+      resumen += `\\nTotal: ${fmt(total)}\\n\\n(Esta es una demostración)`;
+      alert(resumen);
+    });
+
+    // Inicializar
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
+<br>
 <nav>
   <ul>
     <li><a href="https://www.w3schools.com/html/">curso de html</a></li>
     <a href="#inicio">Inicio</a>
   </ul>
 </nav>
+<br>
 
 <footer>
   <p>&copy;  Mi Sitio Web. Tiene todos los derechos reservados.</p>
